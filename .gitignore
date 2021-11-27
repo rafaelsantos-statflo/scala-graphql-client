@@ -1,2 +1,17 @@
+# Visual Studio Code
+.bloop/
+.metals/
+.vscode/
+project/.bloop/
+project/metals.sbt
+project/project/
+
+# IntelliJ
+.idea/
+.bsp/
+project/target/
+target/
+
+# General
 *.class
 *.log
