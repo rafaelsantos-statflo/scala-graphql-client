@@ -51,7 +51,7 @@ The `run` sbt command is going to run the main definition from `src/main/scala/M
 run
 ```
 
-The application is going to output a simple query equivalent to the following GraphQL query against the:
+The application is going to output a simple query equivalent to the following GraphQL query against [GraphqlZero API]:
 
 ```graphql
 query {
