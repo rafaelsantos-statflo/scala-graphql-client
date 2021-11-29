@@ -3,7 +3,7 @@ import caliban.client.SelectionBuilder
 import graphqlzero.Client.Album
 import graphqlzero.Client.Query
 
-case class AlbumView(id: String, title: String)
+case class AlbumView(id: Option[String], title: Option[String])
 
 @main def app: Unit =
   println("--------------------")
@@ -14,4 +14,4 @@ case class AlbumView(id: String, title: String)
 
   val album: SelectionBuilder[Album, AlbumView] =
       (Album.id ~ Album.title)
-        .mapN(AlbumView)
+        .mapN(AlbumView.apply)
