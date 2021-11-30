@@ -15,3 +15,8 @@ case class AlbumView(id: Option[String], title: Option[String])
   val album: SelectionBuilder[Album, AlbumView] =
       (Album.id ~ Album.title)
         .mapN(AlbumView.apply)
+
+  val query: SelectionBuilder[RootQuery, AlbumView] =
+    Query.album(id = "1") {
+      album
+    }
