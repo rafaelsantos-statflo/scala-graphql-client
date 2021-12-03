@@ -1,9 +1,9 @@
 import caliban.client.Operations.RootQuery
 import caliban.client.SelectionBuilder
 import graphqlzero.Client.{Album, Query}
+import graphqlzero.HttpClient
 import sttp.model.Uri
 import sttp.client3.httpclient.HttpClientSyncBackend
-import post.QueryPosts
 
 case class AlbumView(id: Option[String], title: Option[String])
 
@@ -12,7 +12,8 @@ case class AlbumView(id: Option[String], title: Option[String])
   println("Starting the application")
   println("--------------------")
 
-  QueryPosts().queryPost("1") match {
+  val client = HttpClient
+
+  client.queryPost("1") match
     case Right(r) => println(s"Found post $r")
     case Left(l) => println(s"Error when querying posts $l")
-  }
