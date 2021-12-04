@@ -5,8 +5,6 @@ import graphqlzero.HttpClient
 import sttp.model.Uri
 import sttp.client3.httpclient.HttpClientSyncBackend
 
-case class AlbumView(id: Option[String], title: Option[String])
-
 @main def app: Unit =
   println("--------------------")
   println("Starting the application")
@@ -17,3 +15,8 @@ case class AlbumView(id: Option[String], title: Option[String])
   client.queryPost("1") match
     case Right(r) => println(s"Found post $r")
     case Left(l) => println(s"Error when querying posts $l")
+
+  client.queryUsers match {
+    case Right(r) => println(s"Found users: $r")
+    case Left(l) => println(s"Error when querying posts $l")
+  }
