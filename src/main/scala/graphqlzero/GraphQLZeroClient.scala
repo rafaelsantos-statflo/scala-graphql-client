@@ -3,11 +3,11 @@ package graphqlzero
 import caliban.client.FieldBuilder.{ListOf, OptionOf}
 import caliban.client.{CalibanClientError, SelectionBuilder}
 import graphqlzero.Client.*
-import graphqlzero.{PostView, UsersPageView}
+import graphqlzero.{PostRecord, UsersPageRecord}
 import sttp.client3.httpclient.HttpClientSyncBackend
 import sttp.model.Uri
 
-object HttpClient {
+object GraphQLZeroClient {
   private val backend = HttpClientSyncBackend()
   private val uri = Uri(
     scheme = "http",
@@ -15,10 +15,10 @@ object HttpClient {
     path = List("api")
   )
 
-  def queryPost(id: String): Either[CalibanClientError, Option[PostView]] =
-    val selection: SelectionBuilder[Post, PostView] =
+  def queryPost(id: String): Either[CalibanClientError, Option[PostRecord]] =
+    val selection: SelectionBuilder[Post, PostRecord] =
       (Post.id ~ Post.title)
-        .mapN(PostView.apply)
+        .mapN(PostRecord.apply)
 
     Query.post(id = id)
       (selection)
@@ -51,14 +51,14 @@ object HttpClient {
 
   */
 
-  def queryUsers: Either[CalibanClientError, List[UserView]] =
-    val userSelection: SelectionBuilder[User, Option[UserView]] =
+  def queryUsers: Either[CalibanClientError, List[UserRecord]] =
+    val userSelection: SelectionBuilder[User, Option[UserRecord]] =
       (User.id ~ User.name ~ User.email)
         // We get compilation error if I try the short version:  ".mapN(UserView.apply)"
         .mapN((id: Option[String], name: Option[String], email: Option[String]) =>
-          Some(UserView.apply(id, name, email)))
+          Some(UserRecord.apply(id, name, email)))
 
-    val usersPageSelection: SelectionBuilder[UsersPage, List[Option[Option[UserView]]]] =
+    val usersPageSelection: SelectionBuilder[UsersPage, List[Option[Option[UserRecord]]]] =
       (UsersPage.data(userSelection))
         .map(data => data.getOrElse(List.empty))
 
@@ -71,7 +71,7 @@ object HttpClient {
 
     result match {
       // Some(List(Some(Some(UserView(...
-      case Right(r: Option[List[Option[Option[UserView]]]]) => Right(r.map(v => v.flatten).map(v => v.flatten).getOrElse(List.empty))
+      case Right(r: Option[List[Option[Option[UserRecord]]]]) => Right(r.map(v => v.flatten).map(v => v.flatten).getOrElse(List.empty))
       case Left(l) => Left(l)
     }
 
