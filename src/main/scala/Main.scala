@@ -1,4 +1,4 @@
-import repository.{Email, GenericError, Repository, User}
+import service.{Email, GenericError, Service, User}
 
 def printUsers(users: List[User]): Unit =
   users.foreach(println)
@@ -10,10 +10,10 @@ def sendEmails(users: List[User]): List[Either[GenericError, Email]] =
   users
     .filter(u => u.email.isDefined)
     .map(u => Email(u.email.getOrElse(""), s"Welcome ${u.name}"))
-    .map(Repository.sendEmail)
+    .map(Service.sendEmail)
 
 @main def app: Unit =
-  val users: List[User] = Repository.queryUsers
+  val users: List[User] = Service.queryUsers
   println("\n-- All users:")
   printUsers(users)
 
@@ -31,11 +31,11 @@ def sendEmails(users: List[User]): List[Either[GenericError, Email]] =
   emailsSent.filter(e => e.isLeft).map(e => e.left.getOrElse("None")).foreach(println)
 
   println("\n---- The same logic in a single stream")
-  val summary = Repository
+  val summary = Service
     .queryUsers
     .filter(_.email.getOrElse("").endsWith(".ca"))
     .map(u => (u, Email(u.email.getOrElse("None"), s"Welcome ${u.name}")))
-    .map((u, e) => (u, Repository.sendEmail(e)))
+    .map((u, e) => (u, Service.sendEmail(e)))
     .foreach((u: User, s: Either[GenericError, Email]) =>
       val status = s match {
         case Right(r) => "Sent"

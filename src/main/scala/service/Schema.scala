@@ -1,4 +1,4 @@
-package repository
+package service
 
 def str(v: Option[Any]) =
   v.orElse(Some("None")).get

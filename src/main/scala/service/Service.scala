@@ -1,9 +1,9 @@
-package repository
+package service
 
-object Repository {
+object Service {
   private val users: List[User] = List(
     User(1, "Ash Matarazo", Some("Ash.Matarazo@gmail.ca")),
-    User(2, "Bella Glennm", Some("Bella.Glennm@yahoo.com")),
+    User(2, "Bella Glennm", Some("Bella.G@protromail.ca")),
     User(3, "Chris Sexton", Some("Chris.Sexton@outlook.ca")),
     User(4, "David Glennm", Some("David.Glennm@hotmail.com")),
     User(5, "Emily Hanson", Some("Emily_Hanson@yahoo.com")),
