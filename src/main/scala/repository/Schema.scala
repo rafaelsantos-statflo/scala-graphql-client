@@ -1,4 +1,4 @@
-package graphqlzero
+package repository
 
 def str(v: Option[Any]) =
   v.orElse(Some("None")).get
@@ -16,4 +16,7 @@ case class Email(address:String, body: String) {
     s"address: ${str(address)}, body: ${str(body)}"
 }
 
-case class GenericError(message: String)
+case class GenericError(message: String) {
+  override def toString: String =
+    message
+}
