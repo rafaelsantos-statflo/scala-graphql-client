@@ -4,24 +4,24 @@ import service.{Email, GenericError, Service, User}
  * Print all users
  */
 def printUsers(users: List[User]): Unit =
-  users.foreach(println)
+  // TODO: Print users
+  println("TODO: Print users")
 
 
 /**
  * Return only the users which their email ends in `.ca`
  */
 def filterCanadianUsers(users: List[User]): List[User] =
-  users.filter(u => u.email.getOrElse("").endsWith(".ca"))
+  // TODO: filter by canadian email
+  List.empty
 
 
 /**
  * Sends an email to given users
  */
 def sendEmails(users: List[User]): List[Either[GenericError, Email]] =
-  users
-    .filter(u => u.email.isDefined)
-    .map(u => Email(u.email.getOrElse(""), s"Welcome ${u.name}"))
-    .map(Service.sendEmail)
+  // TODO: Send emails using 'Service.sendEmail()'
+  List.empty
 
 /**
  * Print a report for every user indicating their:
@@ -59,13 +59,7 @@ def printReportUsingForLoop(users: List[User], emailResponses: List[Either[Gener
    println(divisionResult)
    ```
    */
-  for (i <- users.indices)
-    val user = users(i)
-    val status = emailResponses(i) match
-      case Right(r) => "Sent"
-      case Left(l) => s"Failed: $l"
-    println(s"name: ${user.name} \temail: ${user.email.getOrElse("None")} \tstatus: $status")
-
+  println("TODO: Print report")
 
 /**
  * Same description as `printReportUsingForLoop()`
@@ -84,33 +78,16 @@ def printReportUsingZip(users: List[User], emailResponses: List[Either[GenericEr
    ```
    ```
    */
-  def division(a: Int, b: Int): Either[String, Int] =
-    if b == 0 then Left("Cannot divide by 0") else Right(a / b)
-  val divisionResult = division(6, 2).fold(l => s"Got error: $l", r => s"Success: $r")
-  println(divisionResult)
-
-
-  users.zip(emailResponses)
-    .foreach((user: User, emailSent: Either[GenericError, Email]) =>
-      val status = emailSent.fold(l => s"Failed: $l", _ => "Sent")
-      println(s"name: ${user.name} \temail: ${user.email.getOrElse("None")} \tstatus: $status")
-    )
+  println("TODO: Print report")
 
 
 def redoAppUsingOneStream: Unit =
-  Service
-    .queryUsers
-    // Filter users.email ending in `.ca`
-    .filter(_.email.getOrElse("").endsWith(".ca"))
-    // Map to Email object
-    .map(u => (u, Email(u.email.getOrElse("None"), s"Welcome ${u.name}")))
-    // Send email
-    .map((u, e) => (u, Service.sendEmail(e)))
-    // Print the report
-    .foreach((u: User, s: Either[GenericError, Email]) =>
-      val status = s.fold(l => s"Failed: $l", _ => "Sent")
-      println(s"name: ${u.name} \temail: ${u.email.getOrElse("None")} \tstatus: $status")
-    )
+  // Service.queryUsers
+  println("TODO: Rewrite app using one single stream")
+  // Filter users.email ending in `.ca`
+  // Map to Email object
+  // Send email
+  // Print the report
 
 
 @main def app: Unit =
